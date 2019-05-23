@@ -1,19 +1,50 @@
-Date.prototype.addDays = function (days) {
-    return new Date(this.valueOf() + days * 864e5);
+export var LocalDate = {
+    today : function () {
+        return new Date(Date.UTC(this.now().getUTCFullYear(), this.now().getUTCMonth(), this.now().getUTCDate()));
+    },
+    now : function () {
+        return new Date();
+    },
+    of: function (year, month, day) {
+        return new Date(year, month-1,day);
+    }
 }
 
-function convertStrToDate(str) {
-    var dArr = str.split('-');
-    return new Date(dArr[2], dArr[1], dArr[0]);
+
+export var LocalDateTime = {
+    today : function () {
+        return new Date(Date.UTC(this.now().getUTCFullYear(), this.now().getUTCMonth(), this.now().getUTCDate()));
+    },
+    now : function () {
+        return new Date();
+    },
+    of: function (year, month, day) {
+        return new Date(year, month-1,day);
+    }
 }
 
-function convertDateToString(date) {
-    return  ('0' + date.getDate()).slice(-2) + "-" + ('0' + (date.getMonth() + 1)).slice(-2) + date.getFullYear();
-}
+Date.prototype.addDays = function(days) {
+	  var _date = new Date(this.valueOf());
+	  _date.setDate(_date.getDate() + days);
+	  return _date;
+};
 
 
+/*
+ "createDateTime":[2019,3,24,20,22,42]
+*/
+ Array.prototype.toLocalDate = function () {
+     var _array = this.valueOf();
+     return LocalDate.of(_array[0], _array[1], _array[2]);
+ }
 
-var mydate = function () {
+ /** 2019-07-29 **/
+ String.prototype.format = function (pattern) {
+     if (pattern == "yyyy-MM-dd") {
+         var _array = this.valueOf().split('-');
+         return LocalDate.of(_array[0], _array[1], _array[2]);
+     }
+ }
+ 
 
-    
-}
+
